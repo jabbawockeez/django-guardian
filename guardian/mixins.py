@@ -158,8 +158,12 @@ class PermissionRequiredMixin(object):
     def get_permission_object(self):
         if hasattr(self, 'permission_object'):
             return self.permission_object
-        return (hasattr(self, 'get_object') and self.get_object() or
-                getattr(self, 'object', None))
+	else:
+	    try:
+		return (hasattr(self, 'get_object') and self.get_object() or
+			getattr(self, 'object', None))
+	    except:
+	        return None
 
     def check_permissions(self, request):
         """
